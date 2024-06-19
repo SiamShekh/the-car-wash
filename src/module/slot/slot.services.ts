@@ -6,8 +6,8 @@ export const CreateSlot_Service = async (payload: TSlot) => {
 
     const findServices = await ServiceModel.findById(payload.service);
 
-    const calculateStartTime = Number(payload?.startTime.split(':')[0]) * 60 + Number(payload?.startTime.split(':')[1]);
-    const calculateEndTime = Number(payload?.endTime.split(':')[0]) * 60 + Number(payload?.endTime.split(':')[1]);
+    const calculateStartTime = Number(payload?.startTime?.split(':')[0]) * 60 + Number(payload?.startTime?.split(':')[1]);
+    const calculateEndTime = Number(payload?.endTime?.split(':')[0]) * 60 + Number(payload?.endTime?.split(':')[1]);
     const calculateSlots = Math.floor((calculateEndTime - calculateStartTime) / Number(findServices?.duration || 0));
 
     const SlotArr = [];
@@ -24,6 +24,7 @@ export const CreateSlot_Service = async (payload: TSlot) => {
             "isBooked": "available",
         };
 
+
         const result = await SlotModel.create(Slot);
         SlotArr.push(result);
         SlotStart = SlotEnd;
@@ -34,7 +35,7 @@ export const CreateSlot_Service = async (payload: TSlot) => {
 
 export const GetAvilableSlots = async (query: any) => {
     const result = SlotModel
-        .find({ $or: [{ date: query?.date }, {service: query?.serviceId}, {}] })
+        .find({ $or: [{ date: query?.date }, { service: query?.serviceId }, {}] })
         .populate('service')
 
     return result;

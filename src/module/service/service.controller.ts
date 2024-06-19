@@ -26,7 +26,7 @@ export const GetAllServiceController: RequestHandler = catchAsync(async (req, re
 
 export const UpdateServiceController: RequestHandler = catchAsync(async (req, res) => {
     const result = await UpdateService_Service(req.params.id, req.body);
-    return res.send(responseData(true, httpStatus.OK, 'Service retrieved successfully', result as {}))
+    return res.send(responseData(true, httpStatus.OK, 'Service update successfully', result as {}))
 })
 
 

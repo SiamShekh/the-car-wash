@@ -20,10 +20,12 @@ export const GetAllService_Service = async () => {
 
 export const UpdateService_Service = async (id: string, payload: Partial<TService>) => {
     const result = await ServiceModel.findByIdAndUpdate(id, { $set: { ...payload } });
-    return result;
+    const findUpdate = await ServiceModel.findById(result?._id);
+    return findUpdate;
 }
 
 export const DeleteService_Service = async (id: string) => {
     const result = await ServiceModel.findByIdAndUpdate(id, { $set: { isDeleted: true } });
-    return result;
+    const findUpdate = await ServiceModel.findById(result?._id);
+    return findUpdate;
 }

@@ -1,7 +1,5 @@
 import Express from "express";
-import { CreateSlot_Controller, GetAvilableSlot } from "../module/slot/slot.controller";
-import vaildate_request_body from "../middlewars/vaildate_request_body";
-import { SlotZod } from "../module/slot/slot.zod";
+import { GetAvilableSlot } from "../module/slot/slot.controller";
 
 const route = Express.Router();
 

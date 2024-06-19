@@ -1,12 +1,13 @@
 import { z } from "zod";
 
 const BookingZod = z.object({
-    service: z.string(),
-    slot: z.string(),
+    serviceId: z.string(),
+    slotId: z.string(),
+    customerId: z.string(),
     vehicleType: z.string(),
     vehicleBrand: z.string(),
     vehicleModel: z.string(),
-    manufacturingYear: z.number().min(4, 'year have 4 chars...').max(4),
+    manufacturingYear: z.number(),
     registrationPlate: z.string()
 });
 

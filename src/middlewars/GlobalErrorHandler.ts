@@ -4,6 +4,8 @@ import { ZodError, any } from "zod";
 
 const GlobalErrorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
 
+    
+    
     if (err.code === 11000) {
         return res.send({
             "success": false,

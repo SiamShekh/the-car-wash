@@ -8,13 +8,13 @@ import { CreateSlot_Controller } from "../module/slot/slot.controller";
 
 const route = Express.Router();
 
-route.post("/services", CreateService);
+route.post("/services", JwtParseMiddlewars('admin'), CreateService);
 route.get("/services/:id", GetSingleServiceByID);
 route.get("/services", GetAllServiceController);
-route.put("/services/:id", UpdateServiceController);
-route.delete("/services/:id", DeleteServiceController);
+route.put("/services/:id", JwtParseMiddlewars('admin'), UpdateServiceController);
+route.delete("/services/:id", JwtParseMiddlewars('admin'), DeleteServiceController);
 
-route.post("/services/slots", vaildate_request_body(SlotZod), CreateSlot_Controller);
+route.post("/services/slots", JwtParseMiddlewars('admin'), vaildate_request_body(SlotZod), CreateSlot_Controller);
 
 
 const ServiceRoute = route;

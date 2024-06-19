@@ -19,6 +19,11 @@ const SlotSchema = new Schema<TSlot>({
         type: String,
         required: true
     },
+    isBooked: {
+        type: String,
+        required: true,
+        enum: ['available', 'booked']
+    }
 }, { timestamps: true })
 
 SlotSchema.pre('save', async function (next) {
