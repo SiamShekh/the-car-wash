@@ -52,27 +52,10 @@ export const GetAllBookingService = async () => {
 
 
 export const GetMyBookingData = async (header: any) => {
-    const headers = header.authorization?.split(' ')[1];
-
-    if (headers) {
-        const decode = await jwt.verify(headers as string, _ENV.secrect as string) as JwtPayload;
-        const isUser = await UserModel.findOne({ email: decode?.email });
-
-        if (isUser?.role === decode?.role) {
-            const result = await BookingModel
-                .find({ customerId: isUser?._id })
-                .populate('customerId', 'name email phone address')
-                .populate('serviceId')
-                .populate('slotId')
-            return result;
-
-        } else {
-            throw new Error('You are not authorized!');
-        }
-
-    } else {
-        throw new Error('Auth token is undefined or your are a unauthraized guy!')
-    }
-
-
+    const result = await BookingModel
+        .find({ customerId: header?._id })
+        .populate('customerId', 'name email phone address')
+        .populate('serviceId')
+        .populate('slotId')
+    return result;
 }

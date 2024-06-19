@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const service_controller_1 = require("../module/service/service.controller");
+const JwtParseMiddlewars_1 = __importDefault(require("../middlewars/JwtParseMiddlewars"));
+const vaildate_request_body_1 = __importDefault(require("../middlewars/vaildate_request_body"));
+const slot_zod_1 = require("../module/slot/slot.zod");
+const slot_controller_1 = require("../module/slot/slot.controller");
+const route = express_1.default.Router();
+route.post("/services", (0, JwtParseMiddlewars_1.default)('admin'), service_controller_1.CreateService);
+route.get("/services/:id", service_controller_1.GetSingleServiceByID);
+route.get("/services", service_controller_1.GetAllServiceController);
+route.put("/services/:id", (0, JwtParseMiddlewars_1.default)('admin'), service_controller_1.UpdateServiceController);
+route.delete("/services/:id", (0, JwtParseMiddlewars_1.default)('admin'), service_controller_1.DeleteServiceController);
+route.post("/services/slots", (0, JwtParseMiddlewars_1.default)('admin'), (0, vaildate_request_body_1.default)(slot_zod_1.SlotZod), slot_controller_1.CreateSlot_Controller);
+const ServiceRoute = route;
+exports.default = ServiceRoute;
