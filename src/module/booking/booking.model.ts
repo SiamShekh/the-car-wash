@@ -30,7 +30,7 @@ const BookingSchema = new Schema<TBooking>({
         required: true
     },
     manufacturingYear: {
-        type: String,
+        type: Number,
         required: true
     },
     registrationPlate: {

@@ -7,6 +7,6 @@ export interface TBooking {
     vehicleType: String,
     vehicleBrand: String,
     vehicleModel: String,
-    manufacturingYear: String,
+    manufacturingYear: Number,
     registrationPlate: String,
 }

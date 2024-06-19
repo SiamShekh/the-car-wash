@@ -34,7 +34,7 @@ export const CreateSlot_Service = async (payload: TSlot) => {
 
 export const GetAvilableSlots = async (query: any) => {
     const result = SlotModel
-        .find({ $or: [{ date: query?.date }, {service: query?.serviceId}] })
+        .find({ $or: [{ date: query?.date }, {service: query?.serviceId}, {}] })
         .populate('service')
 
     return result;
