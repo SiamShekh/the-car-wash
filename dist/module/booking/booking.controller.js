@@ -18,7 +18,9 @@ const booking_service_1 = require("./booking.service");
 const responseData_1 = __importDefault(require("../../middlewars/responseData"));
 const http_status_1 = __importDefault(require("http-status"));
 exports.CreateBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, booking_service_1.CreateBooking_Service)(req.body);
+    var _a;
+    const payload = Object.assign({ customerId: (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a._id }, req.body);
+    const result = yield (0, booking_service_1.CreateBooking_Service)(payload);
     return res.send((0, responseData_1.default)(true, http_status_1.default.OK, 'Booking successful', result));
 }));
 exports.GetAllBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

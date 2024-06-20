@@ -7,7 +7,12 @@ import { JwtPayload } from "jsonwebtoken";
 
 
 export const CreateBooking: RequestHandler = catchAsync(async (req, res) => {
-    const result = await CreateBooking_Service(req.body);
+    const payload = {
+        customerId: req?.user?._id,
+        ...req.body
+    }
+    
+    const result = await CreateBooking_Service(payload);
 
     return res.send(responseData(true, httpStatus.OK, 'Booking successful', result as {}));
 });

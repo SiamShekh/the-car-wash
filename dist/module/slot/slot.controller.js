@@ -23,5 +23,5 @@ exports.CreateSlot_Controller = (0, catchAsync_1.default)((req, res) => __awaite
 }));
 exports.GetAvilableSlot = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield (0, slot_services_1.GetAvilableSlots)(req.query);
-    return res.send((0, responseData_1.default)(true, http_status_1.default.OK, 'Available slots retrieved successfully', result));
+    return res.send(result.length ? (0, responseData_1.default)(true, http_status_1.default.OK, 'Available slots retrieved successfully', result) : (0, responseData_1.default)(true, http_status_1.default.OK, 'No Data Found!', result));
 }));

@@ -6,9 +6,9 @@ import JwtParseMiddlewars from "../middlewars/JwtParseMiddlewars";
 
 const route = Express.Router();
 
-route.post("/bookings", vaildate_request_body(BookingZod), CreateBooking);
+route.post("/bookings", JwtParseMiddlewars('user'), vaildate_request_body(BookingZod), CreateBooking);
 route.get("/bookings", JwtParseMiddlewars('admin'), GetAllBooking);
-route.get("/my-bookings",JwtParseMiddlewars('user'), MyBooking);
+route.get("/my-bookings", JwtParseMiddlewars('user'), MyBooking);
 
 const BookingRoute = route;
 export default BookingRoute;

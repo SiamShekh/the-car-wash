@@ -3,7 +3,7 @@ import app from "./app"
 import _ENV from "./config/config"
 
 async function main() {
-    await mongoose.connect('mongodb://localhost:27017/assignment-3');
+    await mongoose.connect('mongodb+srv://Siam4201:Asik1234*@cluster0.yb7xjgu.mongodb.net/the-car-wash');
 
     app.listen(_ENV.port, () => {
         console.log(`Example app listening on port ${_ENV.port}`)

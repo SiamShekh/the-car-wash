@@ -17,7 +17,7 @@ const app_1 = __importDefault(require("./app"));
 const config_1 = __importDefault(require("./config/config"));
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        yield mongoose_1.default.connect('mongodb://localhost:27017/assignment-3');
+        yield mongoose_1.default.connect('mongodb+srv://Siam4201:Asik1234*@cluster0.yb7xjgu.mongodb.net/the-car-wash');
         app_1.default.listen(config_1.default.port, () => {
             console.log(`Example app listening on port ${config_1.default.port}`);
         });

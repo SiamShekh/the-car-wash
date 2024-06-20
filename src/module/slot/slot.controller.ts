@@ -12,5 +12,5 @@ export const CreateSlot_Controller: RequestHandler = catchAsync(async (req, res)
 
 export const GetAvilableSlot: RequestHandler = catchAsync(async (req, res) => {
     const result = await GetAvilableSlots(req.query);
-    return res.send(responseData(true, httpStatus.OK, 'Available slots retrieved successfully', result))
+    return res.send(result.length ? responseData(true, httpStatus.OK, 'Available slots retrieved successfully', result) : responseData(true, httpStatus.OK, 'No Data Found!', result))
 })
