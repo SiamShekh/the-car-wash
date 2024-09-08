@@ -9,5 +9,7 @@ export interface TService {
 export interface TPayloadService {
     searchTerm: String,
     minPrice: number,
-    maxPrice: number
+    maxPrice: number,
+    sort: string,
+    dsc: string
 }

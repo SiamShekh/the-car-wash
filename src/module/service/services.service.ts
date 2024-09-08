@@ -18,8 +18,9 @@ export const GetAllService_Service = async (payload: Partial<TPayloadService>) =
     const result = await ServiceModel
         .find({
             ...(payload?.searchTerm && { name: { $regex: payload.searchTerm, $options: 'i' } }),
-            ...(payload?.maxPrice && payload?.minPrice && { price: { $gte: payload.minPrice, $lte: payload.maxPrice }})
-        })
+            ...(payload?.maxPrice && payload?.minPrice && { price: { $gte: payload.minPrice, $lte: payload.maxPrice } })
+        }).sort(payload?.sort === 'Duration' ? payload?.dsc === 'DSC' ? '-duration' : 'duration' : payload?.dsc === 'DSC' ? '-price' : 'price')
+
     return result;
 }
 
