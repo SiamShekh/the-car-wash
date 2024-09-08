@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, { Application } from "express";
 import cors from "cors";
 import _ENV from "./config/config";
 import GlobalErrorHandler from "./middlewars/GlobalErrorHandler";
@@ -8,6 +8,7 @@ import route from "./route/route";
 const app: Application = express();
 app.use(express.json());
 app.use(cors());
+
 app.use("/api", route);
 app.use(GlobalErrorHandler)
 

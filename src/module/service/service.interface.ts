@@ -5,3 +5,9 @@ export interface TService {
     duration: Number,
     isDeleted: Boolean,
 }
+
+export interface TPayloadService {
+    searchTerm: String,
+    minPrice: number,
+    maxPrice: number
+}

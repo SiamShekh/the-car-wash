@@ -19,7 +19,8 @@ export const GetSingleServiceByID: RequestHandler = catchAsync(async (req, res) 
 })
 
 export const GetAllServiceController: RequestHandler = catchAsync(async (req, res) => {
-    const result = await GetAllService_Service();
+    // api/service?search=name&min-price=100&max-price=300
+    const result = await GetAllService_Service(req?.query);
     return res.send(responseData(true, httpStatus.OK, 'Service retrieved successfully', result as {}))
 })
 

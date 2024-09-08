@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TService } from "./service.interface";
+import { TPayloadService, TService } from "./service.interface";
 import { ServiceModel } from "./service.model";
 
 export const CreateService_Service = async (payload: TService) => {
@@ -13,8 +13,13 @@ export const GetSingleDataByID = async (id: string) => {
     return result;
 }
 
-export const GetAllService_Service = async () => {
-    const result = await ServiceModel.find();
+export const GetAllService_Service = async (payload: Partial<TPayloadService>) => {
+
+    const result = await ServiceModel
+        .find({
+            ...(payload?.searchTerm && { name: { $regex: payload.searchTerm, $options: 'i' } }),
+            ...(payload?.maxPrice && payload?.minPrice && { price: { $gte: payload.minPrice, $lte: payload.maxPrice }})
+        })
     return result;
 }
 
