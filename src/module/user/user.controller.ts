@@ -52,3 +52,34 @@ export const MyProfile = catchAsync(async (req: Request, res: Response) => {
         });
     }
 })
+
+export const MyInfo = catchAsync(async (req: Request, res: Response) => {
+    const me = req?.user?.email;
+    if (me) {
+        const user = await UserModel.findOne({ email: me });
+        console.log(user);
+        
+        if (user) {
+            return res.send({
+                success: true,
+                statusCode: 200,
+                message: "User found!",
+                data: user
+            });
+        } else {
+            return res.send({
+                success: true,
+                statusCode: 200,
+                message: "User is not found!",
+                data: user
+            });
+        }
+    } else {
+        return res.send({
+            success: true,
+            statusCode: 200,
+            message: "User is not found!",
+            data: []
+        });
+    }
+})

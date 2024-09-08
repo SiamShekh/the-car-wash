@@ -42,6 +42,5 @@ export const GetAvilableSlots = async (query: any) => {
         .find({ $or: [{ date: query?.date }, { service: query?.serviceId }] })
         .populate('service');
 
-
     return result;
 }
