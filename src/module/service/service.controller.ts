@@ -1,7 +1,7 @@
 import { RequestHandler } from "express";
 import catchAsync from "../../middlewars/catchAsync";
 import { ServiceZod } from "./service.zod";
-import { CreateService_Service, DeleteService_Service, GetAllService_Service, GetSingleDataByID, UpdateService_Service } from "./services.service";
+import { CreateService_Service, DeleteService_Service, GetAllService_Service, GetAllService_ServiceAdmin, GetSingleDataByID, UpdateService_Service } from "./services.service";
 import responseData from "../../middlewars/responseData";
 import httpStatus from "http-status";
 
@@ -19,11 +19,14 @@ export const GetSingleServiceByID: RequestHandler = catchAsync(async (req, res) 
 })
 
 export const GetAllServiceController: RequestHandler = catchAsync(async (req, res) => {
-    // api/service?search=name&min-price=100&max-price=300
     const result = await GetAllService_Service(req?.query);
     return res.send(responseData(true, httpStatus.OK, 'Service retrieved successfully', result as {}))
 })
 
+export const GetAllServiceControllerAdmin: RequestHandler = catchAsync(async (req, res) => {
+    const result = await GetAllService_ServiceAdmin(req?.query);
+    return res.send(responseData(true, httpStatus.OK, 'Service retrieved successfully', result as {}))
+})
 
 export const UpdateServiceController: RequestHandler = catchAsync(async (req, res) => {
     const result = await UpdateService_Service(req.params.id, req.body);

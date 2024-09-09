@@ -1,5 +1,5 @@
 import Express from "express";
-import { CreateService, DeleteServiceController, GetAllServiceController, GetSingleServiceByID, UpdateServiceController } from "../module/service/service.controller";
+import { CreateService, DeleteServiceController, GetAllServiceController, GetAllServiceControllerAdmin, GetSingleServiceByID, UpdateServiceController } from "../module/service/service.controller";
 import JwtParseMiddlewars from "../middlewars/JwtParseMiddlewars";
 import SlotRoute from "./slot.route";
 import vaildate_request_body from "../middlewars/vaildate_request_body";
@@ -11,6 +11,7 @@ const route = Express.Router();
 route.post("/services", JwtParseMiddlewars('admin'), CreateService);
 route.get("/services/:id", GetSingleServiceByID);
 route.get("/services", GetAllServiceController);
+route.get("/admin/services", JwtParseMiddlewars('admin'), GetAllServiceControllerAdmin);
 route.put("/services/:id", JwtParseMiddlewars('admin'), UpdateServiceController);
 route.delete("/services/:id", JwtParseMiddlewars('admin'), DeleteServiceController);
 

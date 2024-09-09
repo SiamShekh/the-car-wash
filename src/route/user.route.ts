@@ -1,5 +1,5 @@
 import Express from "express";
-import { CreateNewUser, LoginUserByEmail, MyAdmin, MyInfo, MyProfile } from "../module/user/user.controller";
+import { AppointAsAdmin, CreateNewUser, LoginUserByEmail, MyAdmin, MyInfo, MyProfile, UserList } from "../module/user/user.controller";
 import JwtParseMiddlewars from "../middlewars/JwtParseMiddlewars";
 
 const route = Express.Router();
@@ -10,6 +10,8 @@ route.get("/auth/me", JwtParseMiddlewars('user'), MyProfile);
 route.get("/auth/my-info", JwtParseMiddlewars('user'), MyInfo);
 
 route.get("/auth/my-admin", JwtParseMiddlewars('user'), MyAdmin);
+route.get("/admin/user-list", JwtParseMiddlewars('admin'), UserList);
+route.post("/admin/appoint-admin", JwtParseMiddlewars('admin'), AppointAsAdmin);
 
 const UserRoute = route;
 export default UserRoute;

@@ -125,3 +125,16 @@ export const MyAdmin = catchAsync(async (req: Request, res: Response) => {
     }
 });
 
+
+export const UserList = catchAsync(async (req: Request, res: Response) => {
+   const UserList = await UserModel.find({});
+   return res.send(responseData(true, httpStatus.OK, "User List Retrive", UserList));
+});
+
+export const AppointAsAdmin = catchAsync(async (req: Request, res: Response) => {
+    const id = req?.body?.id;
+    const UserList = await UserModel.findByIdAndUpdate(id, {$set: {role: "admin"}});
+    console.log(UserList);
+    
+    return res.send(responseData(true, httpStatus.OK, "User List Retrive", []));
+ });
