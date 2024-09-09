@@ -24,5 +24,8 @@ export const GetAllBooking: RequestHandler = catchAsync(async (req, res) => {
 
 export const MyBooking: RequestHandler = catchAsync(async (req, res) => {
     const result = await GetMyBookingData(req.user);
+    console.log(req?.user);
+    
     return res.send(responseData(true, httpStatus.OK, 'User bookings retrieved successfully', result as {}));
-})
+});
+
