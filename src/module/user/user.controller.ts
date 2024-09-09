@@ -5,6 +5,9 @@ import responseData from "../../middlewars/responseData";
 import httpStatus from "http-status";
 import { UserLoginZod, UserZod } from "./user.zod";
 import { UserModel } from "./user.model";
+import { ServiceModel } from "../service/service.model";
+import { SlotModel } from "../slot/slot.model";
+import { BookingModel } from "../booking/booking.model";
 
 export const CreateNewUser = catchAsync(async (req: Request, res: Response) => {
     const vaildateUser = UserZod.parse(req.body);
@@ -58,7 +61,7 @@ export const MyInfo = catchAsync(async (req: Request, res: Response) => {
     if (me) {
         const user = await UserModel.findOne({ email: me });
         console.log(user);
-        
+
         if (user) {
             return res.send({
                 success: true,
@@ -83,3 +86,42 @@ export const MyInfo = catchAsync(async (req: Request, res: Response) => {
         });
     }
 })
+
+export const MyAdmin = catchAsync(async (req: Request, res: Response) => {
+    const me = req?.user?.email;
+
+    if (me) {
+        const user = await UserModel.findOne({ email: me });
+        console.log(user);
+
+        if (user?.role === 'admin') {
+            return res.send({
+                success: true,
+                statusCode: 200,
+                message: "Admin found!",
+                data: {
+                    "ping": true
+                }
+            });
+        } else {
+            return res.send({
+                success: false,
+                statusCode: 200,
+                message: "User is not admin!",
+                data: {
+                    ping: false
+                }
+            });
+        }
+    } else {
+        return res.send({
+            success: true,
+            statusCode: 200,
+            message: "User is not found!",
+            data: {
+                ping: false
+            }
+        });
+    }
+});
+
