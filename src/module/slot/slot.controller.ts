@@ -16,6 +16,14 @@ export const GetAvilableSlot: RequestHandler = catchAsync(async (req, res) => {
     return res.send(result.length ? responseData(true, httpStatus.OK, 'Available slots retrieved successfully', result) : responseData(true, httpStatus.OK, 'No Data Found!', result))
 });
 
+export const GetAvilableSlotAdmin: RequestHandler = catchAsync(async (req, res) => {
+    const result = await SlotModel
+        .find({service: req?.query?.serviceId})
+        .populate('service');
+
+    return res.send(result.length ? responseData(true, httpStatus.OK, 'Available slots retrieved successfully', result) : responseData(true, httpStatus.OK, 'No Data Found!', result))
+});
+
 export const SingleSlotInformission: RequestHandler = catchAsync(async (req, res) => {
     const result = await SlotModel.findById(req?.query?.id)
         .populate("service");
