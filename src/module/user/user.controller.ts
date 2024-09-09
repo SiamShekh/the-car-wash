@@ -127,14 +127,28 @@ export const MyAdmin = catchAsync(async (req: Request, res: Response) => {
 
 
 export const UserList = catchAsync(async (req: Request, res: Response) => {
-   const UserList = await UserModel.find({});
-   return res.send(responseData(true, httpStatus.OK, "User List Retrive", UserList));
+    const UserList = await UserModel.find({});
+    return res.send(responseData(true, httpStatus.OK, "User List Retrive", UserList));
 });
 
 export const AppointAsAdmin = catchAsync(async (req: Request, res: Response) => {
     const id = req?.body?.id;
-    const UserList = await UserModel.findByIdAndUpdate(id, {$set: {role: "admin"}});
-    console.log(UserList);
-    
+    const UserList = await UserModel.findByIdAndUpdate(id, { $set: { role: "admin" } });
+
     return res.send(responseData(true, httpStatus.OK, "User List Retrive", []));
- });
+});
+
+export const AdminDashboard = catchAsync(async (req: Request, res: Response) => {
+    const count = {
+        user: await UserModel.estimatedDocumentCount(),
+        booking: await BookingModel.estimatedDocumentCount(),
+        service: (await ServiceModel.find({ isDeleted: false })).length,
+        slot: (await SlotModel.find({ isBooked: "available" })).length,
+    };
+
+    const data = {
+        user: await UserModel.find({}).limit(6).sort('-updatedAt'),
+    }
+
+    return res.send(responseData(true, httpStatus.OK, "Dashboard Data Retrive", { count, data }));
+});
