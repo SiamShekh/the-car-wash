@@ -18,10 +18,26 @@ export const GetAvilableSlot: RequestHandler = catchAsync(async (req, res) => {
 
 export const GetAvilableSlotAdmin: RequestHandler = catchAsync(async (req, res) => {
     const result = await SlotModel
-        .find({service: req?.query?.serviceId})
+        .find({ service: req?.query?.serviceId })
         .populate('service');
 
     return res.send(result.length ? responseData(true, httpStatus.OK, 'Available slots retrieved successfully', result) : responseData(true, httpStatus.OK, 'No Data Found!', result))
+});
+
+export const ChangeSlotsStatus: RequestHandler = catchAsync(async (req, res) => {
+    const data = await SlotModel.findById(req?.body?.id);
+
+    if (data) {
+        const result = await SlotModel
+            .findByIdAndUpdate(req?.body?.id, {
+                $set: {
+                    isBooked: data?.isBooked === 'available' ? 'cancelled' : 'available'
+                }
+            })
+        return res.send(responseData(true, httpStatus.OK, 'Available slots retrieved successfully', { result }));
+    }
+
+    return res.send(responseData(true, httpStatus.OK, 'No Data Found!', []))
 });
 
 export const SingleSlotInformission: RequestHandler = catchAsync(async (req, res) => {

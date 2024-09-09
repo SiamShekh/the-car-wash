@@ -44,6 +44,7 @@ export const CreateBooking_Service = async (payload: TBooking) => {
 export const GetAllBookingService = async () => {
     const result = await BookingModel
         .find({})
+        .sort('-updatedAt')
         .populate('customerId', 'name email phone address')
         .populate('serviceId')
         .populate('slotId')
