@@ -8,6 +8,7 @@ import { UserModel } from "./user.model";
 import { ServiceModel } from "../service/service.model";
 import { SlotModel } from "../slot/slot.model";
 import { BookingModel } from "../booking/booking.model";
+import bcrypt from 'bcrypt';
 
 export const CreateNewUser = catchAsync(async (req: Request, res: Response) => {
     const vaildateUser = UserZod.parse(req.body);
@@ -151,4 +152,38 @@ export const AdminDashboard = catchAsync(async (req: Request, res: Response) => 
     }
 
     return res.send(responseData(true, httpStatus.OK, "Dashboard Data Retrive", { count, data }));
+});
+
+export const UpdateAccountData = catchAsync(async (req: Request, res: Response) => {
+    const userExits = await UserModel.findOne({ email: req?.user?.email });
+    if (userExits) {
+        const passwordCompare = await bcrypt.compare(req?.body.password as string, userExits?.password as string);
+        if (passwordCompare) {
+            let hash = "";
+            if (req?.body?.newPassword) {
+                hash = await bcrypt.hash(req?.body?.newPassword as string, 10)
+            }
+
+            const update = {
+                password: hash ? hash : userExits?.password,
+                address: req?.body?.address ? req?.body?.address : userExits?.address,
+                phone: req?.body?.phone ? req?.body?.phone : userExits?.phone,
+                name: req?.body?.name ? req?.body?.name : userExits?.phone
+            };
+
+            const result = await UserModel.findOneAndUpdate({ email: req?.user?.email }, update);
+
+            return res.send({
+                "success": true,
+                "statusCode": 200,
+                "message": "User info changed successfully",
+                "data": result
+            });
+        } else {
+            throw new Error("Password is not matched!");
+        }
+    } else {
+        throw new Error("user are not exits.");
+    }
+
 });
