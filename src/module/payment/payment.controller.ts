@@ -8,9 +8,9 @@ import { UserModel } from "../user/user.model";
 import { SlotModel } from "../slot/slot.model";
 import { PaymentModel } from "./payment.schema";
 import { ServiceModel } from "../service/service.model";
-import { join } from "path";
-import { readFileSync } from "fs";
 import { BookingModel } from "../booking/booking.model";
+import { join } from 'path';
+import { readFileSync, readFile } from 'fs';
 
 export const SuccessPayment = catchAsync(async (req: Request, res: Response) => {
     const session = await mongoose.startSession();
@@ -51,11 +51,9 @@ export const SuccessPayment = catchAsync(async (req: Request, res: Response) => 
         transactionCommitted = true;
         await session.endSession();
 
-        // const file_location = join(__dirname, "../../view/confirmission.html");
-        // let template = readFileSync(file_location, "utf-8");
-        const file_location = join(process.cwd(), "view", "confirmission.html");
-        let template = readFileSync(file_location, "utf-8");
-        
+        const location = join(__dirname, "../../view/confirmission.html");
+        let template = readFileSync(location, 'utf-8');
+
         template = template.replace(`{{status}}`, search_transaction?.data?.pay_status);
         template = template.replace(`{{{link-back}}}`, 'https://carwisho-ltd.vercel.app/dashboard');
         return res.send(template);
@@ -65,10 +63,10 @@ export const SuccessPayment = catchAsync(async (req: Request, res: Response) => 
         }
 
         await session.endSession();
-        // const file_location = join(__dirname, "../../view/confirmission.html");
-        const file_location = join(process.cwd(), "view", "confirmission.html");
-        let template = readFileSync(file_location, "utf-8");
-        // let template = readFileSync(file_location, "utf-8");
+
+        const location = join(__dirname, "../../view/confirmission.html");
+        let template = readFileSync(location, 'utf-8');
+
         template = template.replace(`{{status}}`, 'Faild!');
         template = template.replace(`{{{link-back}}}`, 'https://carwisho-ltd.vercel.app/service');
         return res.send(template);
