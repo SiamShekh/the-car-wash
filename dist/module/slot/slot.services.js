@@ -42,9 +42,11 @@ const CreateSlot_Service = (payload) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.CreateSlot_Service = CreateSlot_Service;
 const GetAvilableSlots = (query) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield slot_model_1.SlotModel
-        .find({ $or: [{ date: query === null || query === void 0 ? void 0 : query.date }, { service: query === null || query === void 0 ? void 0 : query.serviceId }] })
-        .populate('service');
+    const result = yield slot_model_1.SlotModel.find({ service: query === null || query === void 0 ? void 0 : query.service, date: query === null || query === void 0 ? void 0 : query.date }).populate("service");
+    if (!(result === null || result === void 0 ? void 0 : result.length)) {
+        const result = yield slot_model_1.SlotModel.find({ service: query === null || query === void 0 ? void 0 : query.service }).populate("service");
+        return result;
+    }
     return result;
 });
 exports.GetAvilableSlots = GetAvilableSlots;
