@@ -14,6 +14,7 @@ import { BookingModel } from "../booking/booking.model";
 
 export const SuccessPayment = catchAsync(async (req: Request, res: Response) => {
     const session = await mongoose.startSession();
+    let transactionCommitted = false;
     const transaction = req?.query?.tran;
     try {
         session.startTransaction();
@@ -32,7 +33,7 @@ export const SuccessPayment = catchAsync(async (req: Request, res: Response) => 
         if (search_transaction?.data?.pay_status === 'Successful') {
             const Slot = await SlotModel.findById(PaymentInfo?.slot, {}, { session });
             console.log(Slot);
-            
+
             await BookingModel.create([{
                 customerId: PaymentInfo?.user,
                 serviceId: Slot?.service,
@@ -47,28 +48,36 @@ export const SuccessPayment = catchAsync(async (req: Request, res: Response) => 
         }
 
         await session.commitTransaction();
+        transactionCommitted = true;
         await session.endSession();
 
-        const file_location = join(__dirname, "../../view/confirmission.html");
+        // const file_location = join(__dirname, "../../view/confirmission.html");
+        // let template = readFileSync(file_location, "utf-8");
+        const file_location = join(process.cwd(), "view", "confirmission.html");
         let template = readFileSync(file_location, "utf-8");
+        
         template = template.replace(`{{status}}`, search_transaction?.data?.pay_status);
-        template = template.replace(`{{{link-back}}}`, 'http://localhost:5173/dashboard');
+        template = template.replace(`{{{link-back}}}`, 'https://carwisho-ltd.vercel.app/dashboard');
         return res.send(template);
     } catch (error: any) {
+        if (transactionCommitted === false) {
+            await session.abortTransaction();
+        }
 
-        await session.abortTransaction();
         await session.endSession();
-        const file_location = join(__dirname, "../../view/confirmission.html");
+        // const file_location = join(__dirname, "../../view/confirmission.html");
+        const file_location = join(process.cwd(), "view", "confirmission.html");
         let template = readFileSync(file_location, "utf-8");
+        // let template = readFileSync(file_location, "utf-8");
         template = template.replace(`{{status}}`, 'Faild!');
-        template = template.replace(`{{{link-back}}}`, 'http://localhost:5173/service');
+        template = template.replace(`{{{link-back}}}`, 'https://carwisho-ltd.vercel.app/service');
         return res.send(template);
     }
 });
 
 export const InitiatePayment = catchAsync(async (req: Request, res: Response) => {
     const session = await mongoose.startSession();
-    let transactionCommitted = false; // Track the commit status
+    let transactionCommitted = false;
     try {
         session.startTransaction();
 
@@ -81,8 +90,8 @@ export const InitiatePayment = catchAsync(async (req: Request, res: Response) =>
             store_id: "aamarpaytest",
             tran_id: tran_id,
             signature_key: "dbb74894e82415a2f7ff0ec3a97e4183",
-            success_url: `http://localhost:3000/api/payment/confirmission?tran=${tran_id}`,
-            fail_url: `http://localhost:3000/api/payment/confirmission?tran=${tran_id}`,
+            success_url: `https://carwashio.vercel.app/api/payment/confirmission?tran=${tran_id}`,
+            fail_url: `https://carwashio.vercel.app/api/payment/confirmission?tran=${tran_id}`,
             cancel_url: "https://carwisho-ltd.vercel.app/service",
             amount: Service?.price,
             currency: "BDT",

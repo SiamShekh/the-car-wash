@@ -7,7 +7,14 @@ import route from "./route/route";
 
 const app: Application = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+    origin: [
+        "*",
+        "http://localhost:5173",
+        "https://carwisho-ltd.vercel.app",
+        "http://localhost:4173"
+    ]
+}));
 
 app.use("/api", route);
 app.use(GlobalErrorHandler)

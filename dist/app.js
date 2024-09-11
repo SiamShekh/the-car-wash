@@ -9,7 +9,14 @@ const GlobalErrorHandler_1 = __importDefault(require("./middlewars/GlobalErrorHa
 const route_1 = __importDefault(require("./route/route"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({
+    origin: [
+        "*",
+        "http://localhost:5173",
+        "https://carwisho-ltd.vercel.app",
+        "http://localhost:4173"
+    ]
+}));
 app.use("/api", route_1.default);
 app.use(GlobalErrorHandler_1.default);
 app.get('/', (req, res) => {
