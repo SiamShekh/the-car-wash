@@ -6,6 +6,7 @@ import SlotRoute from "./slot.route";
 import { GetAvilableSlot } from "../module/slot/slot.controller";
 import BookingRoute from "./booking.route";
 import ReviewRoute from "./review.route";
+import PaymentRoute from "./payment.route";
 
 const route = Express.Router();
 
@@ -14,5 +15,6 @@ route.use(ServiceRoute);
 route.use(SlotRoute);
 route.use(BookingRoute);
 route.use(ReviewRoute);
+route.use(PaymentRoute);
 
 export default route;

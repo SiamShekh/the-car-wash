@@ -5,8 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const user_controller_1 = require("../module/user/user.controller");
+const JwtParseMiddlewars_1 = __importDefault(require("../middlewars/JwtParseMiddlewars"));
 const route = express_1.default.Router();
 route.post("/auth/signup", user_controller_1.CreateNewUser);
 route.post("/auth/login", user_controller_1.LoginUserByEmail);
+route.get("/auth/me", (0, JwtParseMiddlewars_1.default)('user'), user_controller_1.MyProfile);
+route.get("/auth/my-info", (0, JwtParseMiddlewars_1.default)('user'), user_controller_1.MyInfo);
+route.get("/auth/my-admin", (0, JwtParseMiddlewars_1.default)('user'), user_controller_1.MyAdmin);
+route.get("/admin/user-list", (0, JwtParseMiddlewars_1.default)('admin'), user_controller_1.UserList);
+route.post("/admin/appoint-admin", (0, JwtParseMiddlewars_1.default)('admin'), user_controller_1.AppointAsAdmin);
+route.get("/admin/dashboard-info", (0, JwtParseMiddlewars_1.default)('admin'), user_controller_1.AdminDashboard);
+route.put("/user/update-account", (0, JwtParseMiddlewars_1.default)('user'), user_controller_1.UpdateAccountData);
 const UserRoute = route;
 exports.default = UserRoute;

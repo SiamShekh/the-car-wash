@@ -29,5 +29,6 @@ exports.GetAllBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
 }));
 exports.MyBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield (0, booking_service_1.GetMyBookingData)(req.user);
+    console.log(req === null || req === void 0 ? void 0 : req.user);
     return res.send((0, responseData_1.default)(true, http_status_1.default.OK, 'User bookings retrieved successfully', result));
 }));

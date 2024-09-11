@@ -17,7 +17,7 @@ const JwtParseMiddlewars = (role: string) => {
         const headers = req.headers.authorization?.split(' ')[1];
 
         if (headers) {
-            const decode = await jwt.verify(headers as string, _ENV.secrect as string) as JwtPayload;
+            const decode = await jwt.verify(headers as string, "amiscrectbolsitomik") as JwtPayload;
             const isUser = await UserModel.findOne({ email: decode?.email });
 
             if (isUser?.role === decode?.role) {

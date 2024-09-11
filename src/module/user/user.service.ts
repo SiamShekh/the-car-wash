@@ -22,7 +22,7 @@ export const LoginUserByEmailService = async (payload: TUserLogin) => {
                 email: userExits?.email,
                 role: userExits?.role
             }
-            const token = jwt.sign(JWT_Payload, _ENV.secrect as string, { expiresIn: '7d' });
+            const token = jwt.sign(JWT_Payload, "amiscrectbolsitomik", { expiresIn: '7d' });
             return {
                 "success": true,
                 "statusCode": 200,
@@ -30,6 +30,8 @@ export const LoginUserByEmailService = async (payload: TUserLogin) => {
                 "token": token,
                 "data": userExits
             }
+        }else {
+        throw new Error("Password is not matching...");
         }
     } else {
         throw new Error("user are not exits.");

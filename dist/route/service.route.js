@@ -13,6 +13,7 @@ const route = express_1.default.Router();
 route.post("/services", (0, JwtParseMiddlewars_1.default)('admin'), service_controller_1.CreateService);
 route.get("/services/:id", service_controller_1.GetSingleServiceByID);
 route.get("/services", service_controller_1.GetAllServiceController);
+route.get("/admin/services", (0, JwtParseMiddlewars_1.default)('admin'), service_controller_1.GetAllServiceControllerAdmin);
 route.put("/services/:id", (0, JwtParseMiddlewars_1.default)('admin'), service_controller_1.UpdateServiceController);
 route.delete("/services/:id", (0, JwtParseMiddlewars_1.default)('admin'), service_controller_1.DeleteServiceController);
 route.post("/services/slots", (0, JwtParseMiddlewars_1.default)('admin'), (0, vaildate_request_body_1.default)(slot_zod_1.SlotZod), slot_controller_1.CreateSlot_Controller);

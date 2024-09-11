@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const config_1 = __importDefault(require("../config/config"));
 const user_model_1 = require("../module/user/user.model");
 const catchAsync_1 = __importDefault(require("./catchAsync"));
 const JwtParseMiddlewars = (role) => {
@@ -21,7 +20,7 @@ const JwtParseMiddlewars = (role) => {
         var _a;
         const headers = (_a = req.headers.authorization) === null || _a === void 0 ? void 0 : _a.split(' ')[1];
         if (headers) {
-            const decode = yield jsonwebtoken_1.default.verify(headers, config_1.default.secrect);
+            const decode = yield jsonwebtoken_1.default.verify(headers, "amiscrectbolsitomik");
             const isUser = yield user_model_1.UserModel.findOne({ email: decode === null || decode === void 0 ? void 0 : decode.email });
             if ((isUser === null || isUser === void 0 ? void 0 : isUser.role) === (decode === null || decode === void 0 ? void 0 : decode.role)) {
                 if ((role === 'admin' && (isUser === null || isUser === void 0 ? void 0 : isUser.role) === 'admin') ||

@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.DeleteServiceController = exports.UpdateServiceController = exports.GetAllServiceController = exports.GetSingleServiceByID = exports.CreateService = void 0;
+exports.DeleteServiceController = exports.UpdateServiceController = exports.GetAllServiceControllerAdmin = exports.GetAllServiceController = exports.GetSingleServiceByID = exports.CreateService = void 0;
 const catchAsync_1 = __importDefault(require("../../middlewars/catchAsync"));
 const service_zod_1 = require("./service.zod");
 const services_service_1 = require("./services.service");
@@ -29,7 +29,11 @@ exports.GetSingleServiceByID = (0, catchAsync_1.default)((req, res) => __awaiter
     return res.send((0, responseData_1.default)(true, http_status_1.default.OK, 'Service retrieved successfully', result));
 }));
 exports.GetAllServiceController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield (0, services_service_1.GetAllService_Service)();
+    const result = yield (0, services_service_1.GetAllService_Service)(req === null || req === void 0 ? void 0 : req.query);
+    return res.send((0, responseData_1.default)(true, http_status_1.default.OK, 'Service retrieved successfully', result));
+}));
+exports.GetAllServiceControllerAdmin = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield (0, services_service_1.GetAllService_ServiceAdmin)(req === null || req === void 0 ? void 0 : req.query);
     return res.send((0, responseData_1.default)(true, http_status_1.default.OK, 'Service retrieved successfully', result));
 }));
 exports.UpdateServiceController = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

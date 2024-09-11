@@ -13,7 +13,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginUserByEmailService = exports.CreateNewUserByPayload = void 0;
-const config_1 = __importDefault(require("../../config/config"));
 const user_model_1 = require("./user.model");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
@@ -33,7 +32,7 @@ const LoginUserByEmailService = (payload) => __awaiter(void 0, void 0, void 0, f
                 email: userExits === null || userExits === void 0 ? void 0 : userExits.email,
                 role: userExits === null || userExits === void 0 ? void 0 : userExits.role
             };
-            const token = jsonwebtoken_1.default.sign(JWT_Payload, config_1.default.secrect, { expiresIn: '7d' });
+            const token = jsonwebtoken_1.default.sign(JWT_Payload, "amiscrectbolsitomik", { expiresIn: '7d' });
             return {
                 "success": true,
                 "statusCode": 200,
@@ -41,6 +40,9 @@ const LoginUserByEmailService = (payload) => __awaiter(void 0, void 0, void 0, f
                 "token": token,
                 "data": userExits
             };
+        }
+        else {
+            throw new Error("Password is not matching...");
         }
     }
     else {

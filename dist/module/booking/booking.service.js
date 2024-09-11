@@ -48,6 +48,7 @@ exports.CreateBooking_Service = CreateBooking_Service;
 const GetAllBookingService = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield booking_model_1.BookingModel
         .find({})
+        .sort('-updatedAt')
         .populate('customerId', 'name email phone address')
         .populate('serviceId')
         .populate('slotId');
